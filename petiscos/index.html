@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petshot — Petiscos</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="grain"></div>
+
+  
+<header class="site-header">
+  <div class="nav-pill">
+    <a class="brand" href="../index.html">PETSHOT</a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="../index.html">Início</a>
+      <a href="../cachorros/index.html">Pets</a>
+      <a href="../petiscos/index.html">Categorias</a>
+    </nav>
+  </div>
+</header>
+
+
+  <main>
+    <section class="section shell">
+      <div class="row">
+        <div class="col-12">
+          <div class="category-hero">
+            <div>
+              <span class="petshot-tag">petshot • categoria</span>
+              <h1>🦴 Petiscos</h1>
+              <p>Pequenas recompensas para transformar momentos comuns em momentos especiais.</p>
+              <a class="back-home" href="../index.html">← Voltar para a página principal</a>
+              <div class="category-links mt-3">
+                <a href="../cachorros/index.html">🐶 Cachorros</a>
+                <a href="../gatos/index.html">🐱 Gatos</a>
+                <a href="../petiscos/index.html">🦴 Petiscos</a>
+                <a href="../brinquedos/index.html">🧸 Brinquedos</a>
+                <a href="../higiene/index.html">🛁 Higiene</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="section-title wide">
+        <span class="tag">encontre o que procura</span>
+        <h2 class="soft-glitch-title">Produtos e cuidados</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-6 mb-4">
+          <div class="petshot-card">
+            <div class="petshot-card-image">
+              <img src="../assets/cach.jpeg" alt="Petiscos">
+            </div>
+            <div class="petshot-card-body">
+              <span class="petshot-tag">petshot</span>
+              <h3>🦴 Petiscos</h3>
+              <p>Pequenas recompensas para transformar momentos comuns em momentos especiais.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 mb-4">
+          <div class="product-card">
+            <div class="product-icon">💜</div>
+            <h3>Feito para eles</h3>
+            <p>
+              Encontre opções pensadas para tornar a rotina do seu
+              pet mais divertida, confortável e cheia de carinho.
+            </p>
+            <a class="petshot-btn" href="../index.html">Ver outras categorias →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+
+        <div class="col-12 col-md-4 mb-4">
+          <div class="product-card text-center">
+            <div class="product-icon">🐶</div>
+            <h3>Para cachorros</h3>
+            <p>Petiscos para diferentes momentos do dia.</p>
+            <a class="petshot-btn" href="#">Confira</a>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+          <div class="product-card text-center">
+            <div class="product-icon">🐱</div>
+            <h3>Para gatos</h3>
+            <p>Opções para agradar os companheiros felinos.</p>
+            <a class="petshot-btn" href="#">Confira</a>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+          <div class="product-card text-center">
+            <div class="product-icon">⭐</div>
+            <h3>Recompensas</h3>
+            <p>Use petiscos como uma forma de carinho e recompensa.</p>
+            <a class="petshot-btn" href="#">Confira</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  
+<footer class="footer">
+  <div class="shell text-center">
+    <p>🐾 <strong>Petshot</strong> — Cuidando de quem faz parte da família.</p>
+    <small>Projeto acadêmico • Layout desenvolvido com Bootstrap</small>
+  </div>
+</footer>
+
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d", { alpha: false });
+      let width = 0, height = 0, centerX = 0, centerY = 0;
+      let stars = [];
+      const STAR_COUNT = 620;
+      const DEPTH = 1200;
+      const SPEED = 2.1;
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        centerX = width / 2;
+        centerY = height / 2;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function reset(star, far = false) {
+        const spread = Math.max(width, height) * 1.25;
+        star.x = (Math.random() - .5) * spread;
+        star.y = (Math.random() - .5) * spread;
+        star.z = far ? Math.random() * DEPTH + 1 : DEPTH;
+        star.pz = star.z;
+        star.size = Math.random() * 1.5 + .35;
+      }
+
+      function init() {
+        stars = Array.from({ length: STAR_COUNT }, () => {
+          const star = {};
+          reset(star, true);
+          return star;
+        });
+      }
+
+      function draw() {
+        ctx.fillStyle = "#08070d";
+        ctx.fillRect(0, 0, width, height);
+
+        for (const star of stars) {
+          star.pz = star.z;
+          star.z -= SPEED;
+
+          if (star.z < 1) {
+            reset(star);
+            continue;
+          }
+
+          const sx = centerX + (star.x / star.z) * 420;
+          const sy = centerY + (star.y / star.z) * 420;
+          const px = centerX + (star.x / star.pz) * 420;
+          const py = centerY + (star.y / star.pz) * 420;
+
+          if (sx < -20 || sx > width + 20 || sy < -20 || sy > height + 20) {
+            reset(star);
+            continue;
+          }
+
+          const alpha = Math.min(1, (DEPTH - star.z) / 500 + .15);
+          const radius = Math.max(.4, (1 - star.z / DEPTH) * 2.2) * star.size;
+
+          ctx.beginPath();
+          ctx.moveTo(px, py);
+          ctx.lineTo(sx, sy);
+          ctx.strokeStyle = `rgba(255,255,255,${alpha * .45})`;
+          ctx.lineWidth = radius;
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(sx, sy, radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      init();
+      draw();
+      window.addEventListener("resize", () => {
+        resize();
+        init();
+      });
+    })();
+  </script>
+</body>
+</html>

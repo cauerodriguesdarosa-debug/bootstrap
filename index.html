@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petshot — Um lugar para seu pet</title>
+
+  <!-- Bootstrap 4.6 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Mesmo estilo visual do site original -->
+  <link rel="stylesheet" href="style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body,
+    .petshot-hero,
+    .petshot-card,
+    .petshot-btn,
+    .nav,
+    .brand {
+      font-family: "Nunito", sans-serif !important;
+    }
+
+    h1, h2, h3, h4, .brand {
+      font-family: "Nunito", sans-serif !important;
+      font-weight: 800;
+    }
+
+    .petshot-hero {
+      min-height: 390px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 25% 20%, rgba(193,255,213,.12), transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(255,159,207,.13), transparent 28%),
+        rgba(10,8,16,.76);
+      box-shadow: 0 26px 90px rgba(0,0,0,.42);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .petshot-hero::before {
+      content: "🐾";
+      position: absolute;
+      font-size: 11rem;
+      opacity: .035;
+      right: 5%;
+      bottom: -25%;
+      transform: rotate(-15deg);
+    }
+
+    .petshot-hero h1 {
+      font-family: "Space Mono", monospace;
+      font-size: clamp(3.2rem, 8vw, 7rem);
+      letter-spacing: .12em;
+      margin: 0;
+      text-shadow: 0 0 25px rgba(255,255,255,.12);
+      animation: petshotFloat 4s ease-in-out infinite;
+    }
+
+    .petshot-hero .lead {
+      color: var(--soft);
+      max-width: 650px;
+      margin: 20px auto 0;
+    }
+
+    .petshot-tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 1px solid rgba(193,255,213,.22);
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(193,255,213,.05);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .68rem;
+      font-weight: 800;
+    }
+
+    .petshot-card {
+      height: 100%;
+      padding: 0;
+      background: rgba(20,16,29,.78);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0,0,0,.30);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .petshot-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255,255,255,.24);
+      box-shadow: 0 25px 65px rgba(0,0,0,.42);
+    }
+
+    .petshot-card img {
+      width: 100%;
+      height: 245px;
+      object-fit: contain;
+      object-position: center center;
+      display: block;
+      filter: saturate(.8) contrast(1.05);
+    }
+
+    .petshot-card-body {
+      padding: 25px;
+    }
+
+    .petshot-card h3 {
+      margin: 10px 0;
+      font-weight: 900;
+    }
+
+    .petshot-card p {
+      color: var(--soft);
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    .petshot-mini {
+      min-height: 210px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .petshot-icon {
+      font-size: 3.4rem;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,.08));
+    }
+
+    .petshot-mini h3 {
+      font-weight: 900;
+    }
+
+    .petshot-mini p {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .petshot-btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 9px 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255,255,255,.05);
+      font-weight: 800;
+      transition: .2s ease;
+    }
+
+    .petshot-btn:hover {
+      color: var(--ink);
+      background: rgba(255,255,255,.12);
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+
+    .layout-label {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-family: "Space Mono", monospace;
+      font-size: .65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    @keyframes petshotFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    @media (max-width: 767px) {
+      .site-header {
+        padding: 12px 12px 0;
+      }
+
+      .nav-pill {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 18px;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .petshot-hero {
+        min-height: 330px;
+        padding: 42px 20px;
+      }
+
+      .petshot-hero h1 {
+        font-size: clamp(2.4rem, 14vw, 4.2rem);
+        letter-spacing: .06em;
+        word-break: break-word;
+      }
+
+      .petshot-hero .lead {
+        font-size: 1rem;
+      }
+
+      .section {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .petshot-card img {
+        height: 210px;
+      }
+
+      .petshot-card-body {
+        padding: 20px;
+      }
+
+      .petshot-mini {
+        min-height: 190px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .petshot-hero h1 {
+        font-size: 2.35rem;
+      }
+
+      .petshot-btn {
+        max-width: 100%;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .petshot-card img {
+        height: 185px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fundo de estrelas -->
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="grain"></div>
+
+  <!-- NAVBAR -->
+  <header class="site-header">
+    <div class="nav-pill">
+      <a class="brand" href="#inicio">PETSHOT</a>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="#inicio">Início</a>
+        <a href="cachorros/index.html">Pets</a>
+        <a href="petiscos/index.html">Categorias</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =====================================================
+         LINHA 1 — COLUNA 12 — JUMBOTRON
+         ===================================================== -->
+    <section class="section shell" id="inicio">
+      <div class="row">
+        <div class="col-12">
+
+          <div class="petshot-hero jumbotron mb-0">
+            <div>
+              <span class="petshot-tag">pet shop • carinho • cuidado</span>
+
+              <h1>PETSHOT</h1>
+
+              <p class="lead">
+                Um cantinho especial para quem considera seu pet
+                parte da família. Encontre produtos, diversão e
+                muito carinho em um só lugar. 🐾
+              </p>
+
+              <a href="#pets" class="petshot-btn">
+                Conheça nossos pets ↓
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         LINHA 2 — DUAS COLUNAS DE TAMANHO 6
+         ===================================================== -->
+    <section class="section shell" id="pets">
+
+      <div class="section-title wide">
+        <span class="tag">nossos companheiros</span>
+        <h2 class="soft-glitch-title">Para cada tipo de pet</h2>
+      </div>
+
+      <div class="row">
+
+        <!-- COLUNA 6 -->
+        <div class="col-12 col-md-6 mb-4">
+          <div class="petshot-card">
+
+            <img src="cach.jpeg" alt="Cachorro fofo">
+
+            <div class="petshot-card-body">
+              <span class="petshot-tag">cachorros</span>
+              <h3>🐶 Mundo dos Dogs</h3>
+
+              <p>
+                Brinquedos, coleiras, caminhas, petiscos e acessórios
+                para deixar seu melhor amigo sempre feliz.
+              </p>
+
+              <a href="gatos/index.html" class="petshot-btn">Ver produtos →</a>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- COLUNA 6 -->
+        <div class="col-12 col-md-6 mb-4">
+          <div class="petshot-card">
+
+            <img src="gato.jpeg" alt="Gato fofo">
+
+            <div class="petshot-card-body">
+              <span class="petshot-tag">gatos</span>
+              <h3>🐱 Reino dos Gatos</h3>
+
+              <p>
+                Arranhadores, brinquedos, caminhas e acessórios
+                pensados para os pequenos exploradores.
+              </p>
+
+              <a href="cachorros/index.html" class="petshot-btn">Ver produtos →</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         LINHA 3 — TRÊS COLUNAS DE TAMANHO 4
+         ===================================================== -->
+    <section class="section shell" id="categorias">
+
+      <div class="section-title wide">
+        <span class="tag">petshot</span>
+        <h2 class="soft-glitch-title">Tudo para seu pet</h2>
+      </div>
+
+      <div class="row">
+
+        <!-- COLUNA 4 — CARD 1 -->
+        <div class="col-12 col-md-4 mb-4">
+          <div class="petshot-card petshot-mini">
+
+            <div class="petshot-icon">🦴</div>
+
+            <h3>Petiscos</h3>
+
+            <p>
+              Recompensas deliciosas para transformar qualquer
+              momento em uma lembrança especial.
+            </p>
+
+            <a href="petiscos/index.html" class="petshot-btn">Confira</a>
+
+          </div>
+        </div>
+
+
+        <!-- COLUNA 4 — CARD 2 -->
+        <div class="col-12 col-md-4 mb-4">
+          <div class="petshot-card petshot-mini">
+
+            <div class="petshot-icon">🧸</div>
+
+            <h3>Brinquedos</h3>
+
+            <p>
+              Diversão para gastar energia, estimular a curiosidade
+              e criar momentos de brincadeira.
+            </p>
+
+            <a href="brinquedos/index.html" class="petshot-btn">Confira</a>
+
+          </div>
+        </div>
+
+
+        <!-- COLUNA 4 — CARD 3 -->
+        <div class="col-12 col-md-4 mb-4">
+          <div class="petshot-card petshot-mini">
+
+            <div class="petshot-icon">🛁</div>
+
+            <h3>Higiene</h3>
+
+            <p>
+              Cuidados essenciais para manter seu companheiro
+              confortável, limpo e bem cuidado.
+            </p>
+
+            <a href="higiene/index.html" class="petshot-btn">Confira</a>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="footer">
+    <div class="shell text-center">
+      <p>🐾 <strong>Petshot</strong> — Cuidando de quem faz parte da família.</p>
+      <small>Projeto acadêmico • Layout desenvolvido com Bootstrap</small>
+    </div>
+  </footer>
+
+
+  <!-- Estrelas viajando no espaço -->
+  <script>
+    (() => {
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d", { alpha: false });
+
+      let width = 0, height = 0, centerX = 0, centerY = 0;
+      let stars = [];
+      const STAR_COUNT = 620;
+      const DEPTH = 1200;
+      const SPEED = 2.1;
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        centerX = width / 2;
+        centerY = height / 2;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function reset(star, far = false) {
+        const spread = Math.max(width, height) * 1.25;
+        star.x = (Math.random() - .5) * spread;
+        star.y = (Math.random() - .5) * spread;
+        star.z = far ? Math.random() * DEPTH + 1 : DEPTH;
+        star.pz = star.z;
+        star.size = Math.random() * 1.5 + .35;
+      }
+
+      function init() {
+        stars = Array.from({ length: STAR_COUNT }, () => {
+          const star = {};
+          reset(star, true);
+          return star;
+        });
+      }
+
+      function draw() {
+        ctx.fillStyle = "#08070d";
+        ctx.fillRect(0, 0, width, height);
+
+        for (const star of stars) {
+          star.pz = star.z;
+          star.z -= SPEED;
+
+          if (star.z < 1) {
+            reset(star);
+            continue;
+          }
+
+          const sx = centerX + (star.x / star.z) * 420;
+          const sy = centerY + (star.y / star.z) * 420;
+          const px = centerX + (star.x / star.pz) * 420;
+          const py = centerY + (star.y / star.pz) * 420;
+
+          if (sx < -20 || sx > width + 20 || sy < -20 || sy > height + 20) {
+            reset(star);
+            continue;
+          }
+
+          const alpha = Math.min(1, (DEPTH - star.z) / 500 + .15);
+          const radius = Math.max(.4, (1 - star.z / DEPTH) * 2.2) * star.size;
+
+          ctx.beginPath();
+          ctx.moveTo(px, py);
+          ctx.lineTo(sx, sy);
+          ctx.strokeStyle = `rgba(255,255,255,${alpha * .45})`;
+          ctx.lineWidth = radius;
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(sx, sy, radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      init();
+      draw();
+      window.addEventListener("resize", () => {
+        resize();
+        init();
+      });
+    })();
+  </script>
+
+</body>
+</html>
